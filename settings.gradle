@@ -1,1 +1,6 @@
+plugins {
+    // SECURITY: [Layer 1] Allow Gradle to auto-provision the configured Java toolchain (Java 26) deterministically.
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
 rootProject.name = 'spring-boot-proj-structure'

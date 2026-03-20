@@ -1,6 +1,8 @@
 plugins {
     id 'java'
-    id 'org.springframework.boot' version '3.3.2'
+    // SECURITY: [Layer 3] Keep Spring Boot on latest 3.5.x patch for CVE fixes.
+    // If this version doesn't resolve in your environment, downgrade only as far as needed while staying on 3.5.x.
+    id 'org.springframework.boot' version '3.5.12'
     id 'io.spring.dependency-management' version '1.1.6'
 }
 
@@ -8,11 +10,12 @@ group = 'com.userManagement'
 version = '0.0.1-SNAPSHOT'
 description = 'spring-boot-proj-structure'
 
-//java {
-//    toolchain {
-//        languageVersion = JavaLanguageVersion.of(17)
-//    }
-//}
+java {
+    toolchain {
+        // SECURITY: [Layer 1] Target Java 26 runtime features and security updates.
+        languageVersion = JavaLanguageVersion.of(26)
+    }
+}
 
 repositories {
     mavenCentral()
@@ -21,9 +24,20 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.security:spring-security-oauth2-resource-server'
+    implementation 'org.springframework.security:spring-security-oauth2-jose'
+    // SECURITY: [Layer 3] LDAP integration for enterprise directory lookup.
+    implementation 'org.springframework.boot:spring-boot-starter-data-ldap'
     runtimeOnly 'com.h2database:h2'
-    implementation 'org.projectlombok:lombok'
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

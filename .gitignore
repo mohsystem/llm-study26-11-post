@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+# SECURITY: [Layer 6] Local prompt / logs may contain sensitive context; never commit.
+user-prompt.log
